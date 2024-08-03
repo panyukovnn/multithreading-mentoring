@@ -1,0 +1,19 @@
+
+server:
+  port: 8085
+  tomcat:
+    threads:
+      max: 200
+
+resilience4j:
+  rateLimiter:
+    instances:
+      marketPlaceParser:
+        timeout-duration: 5s
+        limit-refresh-period: 1s
+        limit-for-period: 10
+  bulkhead:
+    instances:
+      marketPlaceParser:
+        maxConcurrentCalls: 10
+        maxWaitDuration: 5s
