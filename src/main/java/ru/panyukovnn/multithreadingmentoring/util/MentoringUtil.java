@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
 
 @Slf4j
 @Service
-public class MentoringService {
+public class MentoringUtil {
 
     private final ExecutorService longOperationExecutor = Executors.newFixedThreadPool(10);
 
@@ -22,7 +22,7 @@ public class MentoringService {
         return "Долгая операция выполнена успешно";
     }
 
-    @Async("correctElasticExecutor")
+    @Async("elasticExecutor")
     public CompletableFuture<String> executeSyncLongOperationInDifferentThreadPool() {
         String result = executeLongOperation();
 
@@ -44,4 +44,8 @@ public class MentoringService {
         return "Ваш запрос получен и будет обработан";
     }
 
+    @SneakyThrows
+    public static void sleep(int millis) {
+        Thread.sleep(millis);
+    }
 }

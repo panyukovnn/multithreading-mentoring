@@ -1,9 +1,10 @@
-package ru.panyukovnn.multithreadingmentoring.patterns.parallelrequeset;
+package ru.panyukovnn.multithreadingmentoring.patterns.collectparallelrequests;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import ru.panyukovnn.multithreadingmentoring.AbstractTest;
 
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 @Slf4j
@@ -13,7 +14,7 @@ class ParallelRequestServiceTest extends AbstractTest {
     void sequentialExecution() {
         long startTime = System.currentTimeMillis();
 
-        parallelRequestService.sequentialExecution();
+        parallelRequestService.sequentialExecution(UUID.randomUUID());
 
         log.info("Время выполнения: {}", System.currentTimeMillis() - startTime);
     }
@@ -22,7 +23,7 @@ class ParallelRequestServiceTest extends AbstractTest {
     void parallelExecution() throws ExecutionException, InterruptedException {
         long startTime = System.currentTimeMillis();
 
-        parallelRequestService.parallelExecution()
+        parallelRequestService.parallelExecution(UUID.randomUUID())
             .get();
 
         log.info("Время выполнения: {}", System.currentTimeMillis() - startTime);

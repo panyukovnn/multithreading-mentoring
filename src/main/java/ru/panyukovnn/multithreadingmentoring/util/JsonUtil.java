@@ -14,6 +14,16 @@ public class JsonUtil {
 
     private final ObjectMapper objectMapper;
 
+    public <T> String toJson(T obj) {
+        try {
+            return objectMapper.writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            log.error("Ошибка преобразования объекта в строку: {}", e.getMessage(), e);
+
+            throw new RuntimeException(e);
+        }
+    }
+
     public <T> T fromJson(String value, Class<T> clazz) {
         try {
             return objectMapper.readValue(value, clazz);

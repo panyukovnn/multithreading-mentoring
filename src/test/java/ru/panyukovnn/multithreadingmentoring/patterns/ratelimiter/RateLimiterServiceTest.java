@@ -1,7 +1,5 @@
 package ru.panyukovnn.multithreadingmentoring.patterns.ratelimiter;
 
-import io.github.resilience4j.bulkhead.BulkheadFullException;
-import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import ru.panyukovnn.multithreadingmentoring.AbstractTest;
@@ -19,10 +17,23 @@ class RateLimiterServiceTest extends AbstractTest {
     }
 
     @Test
+    void parsePageWithSemaphoreRateLimiting() {
+        callInParallel(100, rateLimiterService::parsePageWithSemaphoreRateLimiting);
+    }
+
+    @Test
     void parsePageWithRateLimiter() {
-        callInParallel(100, () -> {
+        callInParallel(1100, () -> {
             try {
-                rateLimiterService.parsePageWithRateLimiting().get();
+                rateLimiterService.parsePageWithRateLimitingCompletableFuture()
+                    .whenComplete((result, ex) -> {
+                        if (ex != null) {
+                            log.warn(ex.getMessage(), ex);
+                        } else {
+                            log.info(result);
+                        }
+                    })
+                    .get();
             } catch (InterruptedException | ExecutionException e) {
                 throw new RuntimeException(e);
             }
@@ -35,8 +46,31 @@ class RateLimiterServiceTest extends AbstractTest {
     }
 
     @Test
-    void parsePageWithRateLimiterResilience4jBulkhead() {
-        callInParallel(2000, () -> rateLimiterService.parsePageWithBulkheadResilience4j());
+    void parsePageWithRateLimiterResilience4jCompletableFuture() {
+//        rateLimiterService.parsePageWithRateLimitingResilience4jCompletableFuture();
+        callInParallel(150, () -> {
+            try {
+                rateLimiterService.parsePageWithRateLimitingResilience4jCompletableFuture().get();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Test
+    void parsePageWithRateLimiterResilience4jBulkheadSemaphore() {
+        callInParallel(150, rateLimiterService::parsePageWithSemaphoreBulkheadResilience4j);
+    }
+
+    @Test
+    void parsePageWithRateLimiterResilience4jBulkheadThreadpoolAndTimeLimiter() {
+        callInParallel(150, () -> {
+            try {
+                rateLimiterService.parsePageWithThreadPoolBulkheadAndTimeLimiterResilience4j().get();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private void callInParallel(int threadsNumber, Runnable runnable) {

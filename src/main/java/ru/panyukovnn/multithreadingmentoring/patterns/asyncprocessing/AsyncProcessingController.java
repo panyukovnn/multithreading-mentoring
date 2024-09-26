@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.panyukovnn.multithreadingmentoring.util.MentoringService;
+import ru.panyukovnn.multithreadingmentoring.util.MentoringUtil;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -13,20 +13,20 @@ import java.util.concurrent.CompletableFuture;
 @RequestMapping("/api/v1/async-processing")
 public class AsyncProcessingController {
 
-    private final MentoringService mentoringService;
+    private final MentoringUtil mentoringUtil;
 
     @PostMapping("/call-sync")
     public String postCallSync() {
-        return mentoringService.executeLongOperation();
+        return mentoringUtil.executeLongOperation();
     }
 
     @PostMapping("/call-sync-and-change-thread")
     public CompletableFuture<String> postCallAsyncAndChangeThread() {
-        return mentoringService.executeSyncLongOperationInDifferentThreadPool();
+        return mentoringUtil.executeSyncLongOperationInDifferentThreadPool();
     }
 
     @PostMapping("/call-async")
     public String postCallAsync() {
-        return mentoringService.executeAsyncLongOperation();
+        return mentoringUtil.executeAsyncLongOperation();
     }
 }

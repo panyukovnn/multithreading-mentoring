@@ -5,15 +5,32 @@ server:
     threads:
       max: 200
 
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+
+app:
+  kafka:
+    topicIn: "topicIn"
+    topicOut: "topicOut"
+
 resilience4j:
   rateLimiter:
     instances:
-      marketPlaceParser:
+      parser:
         timeout-duration: 5s
         limit-refresh-period: 1s
         limit-for-period: 10
   bulkhead:
     instances:
-      marketPlaceParser:
+      parserSemaphore:
         maxConcurrentCalls: 10
         maxWaitDuration: 5s
+      parserThreadPool:
+        maxThreadPoolSize: 10
+        coreThreadPoolSize: 10
+        queueCapacity: 10
+  timelimiter:
+    instances:
+      parserThreadPool:
+        timeoutDuration: 3s

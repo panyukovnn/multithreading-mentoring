@@ -7,6 +7,8 @@ import org.springframework.web.client.RestTemplate;
 import ru.panyukovnn.multithreadingmentoring.dto.ProductInfo;
 import ru.panyukovnn.multithreadingmentoring.util.JsonUtil;
 
+import java.util.UUID;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class ProductInfoClient {
     private final JsonUtil jsonUtil;
     private final RestTemplate restTemplate;
 
-    public ProductInfo fetchProductInfo() {
+    public ProductInfo fetchProductInfo(UUID productId) {
         restTemplate.getForObject("https://httpbin.org/delay/2", String.class);
 
         log.info("Выполнен запрос с задержкой ProductInfo");

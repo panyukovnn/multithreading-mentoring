@@ -13,7 +13,7 @@ public class MarketPlaceParser {
     private final RestTemplate restTemplate;
 
     public String parsePage() {
-        String response = restTemplate.getForObject("https://httpbin.org/delay/1", String.class);
+        String response = restTemplate.getForObject("https://httpbin.org/delay/2", String.class);
 
         log.info("Данные извлечены");
 

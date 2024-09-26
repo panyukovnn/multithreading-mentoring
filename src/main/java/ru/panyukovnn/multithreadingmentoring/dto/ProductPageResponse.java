@@ -11,5 +11,5 @@ public class ProductPageResponse {
     private String brand;
     private String name;
     private BigDecimal price;
-    private List<Recommendation> recommendations;
+    private List<Feedback> feedbacks;
 }

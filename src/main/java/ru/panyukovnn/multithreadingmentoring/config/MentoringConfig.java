@@ -19,12 +19,17 @@ public class MentoringConfig {
     }
 
     @Bean(destroyMethod = "shutdown")
-    public ExecutorService simpleSingleExecutor() {
+    public ExecutorService refreshCacheSingleExecutor() {
         return Executors.newSingleThreadExecutor();
     }
 
     @Bean(destroyMethod = "shutdown")
-    public ExecutorService simpleSingleExecutor2() {
+    public ExecutorService analyticsSingleExecutor() {
+        return Executors.newSingleThreadExecutor();
+    }
+
+    @Bean(destroyMethod = "shutdown")
+    public ExecutorService simpleSingleExecutor() {
         return Executors.newSingleThreadExecutor();
     }
 
@@ -42,10 +47,39 @@ public class MentoringConfig {
 
     @Bean(destroyMethod = "shutdown")
     public ExecutorService correctElasticExecutor() {
-        BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(10);
+        return createElasticExecutor(10, 1000);
+    }
+
+    @Bean(destroyMethod = "shutdown")
+    public ExecutorService productInfoElasticExecutor() {
+        return createElasticExecutor(10, 1000);
+    }
+
+    @Bean(destroyMethod = "shutdown")
+    public ExecutorService feedbacksElasticExecutor() {
+        return createElasticExecutor(10, 1000);
+    }
+
+    @Bean(destroyMethod = "shutdown")
+    public ExecutorService parserElasticExecutor() {
+        return createElasticExecutor(10, 100);
+    }
+
+    @Bean(destroyMethod = "shutdown")
+    public ExecutorService runParallelTasksElasticExecutor() {
+        return createElasticExecutor(10, 100);
+    }
+
+    @Bean(destroyMethod = "shutdown")
+    public ExecutorService runAsyncTasksElasticExecutor() {
+        return createElasticExecutor(10, 100);
+    }
+
+    private ThreadPoolExecutor createElasticExecutor(int threads, int queueCapacity) {
+        BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(queueCapacity);
 
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
-            10, 10,
+            threads, threads,
             60L, TimeUnit.SECONDS,
             queue, new ThreadPoolExecutor.AbortPolicy());
 
