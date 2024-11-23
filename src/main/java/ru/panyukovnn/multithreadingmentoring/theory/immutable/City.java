@@ -1,4 +1,4 @@
-package ru.panyukovnn.multithreadingmentoring.basics.immutable;
+package ru.panyukovnn.multithreadingmentoring.theory.immutable;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

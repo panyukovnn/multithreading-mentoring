@@ -1,4 +1,4 @@
-package ru.panyukovnn.multithreadingmentoring.basics;
+package ru.panyukovnn.multithreadingmentoring.theory.basics;
 
 import org.junit.jupiter.api.Test;
 

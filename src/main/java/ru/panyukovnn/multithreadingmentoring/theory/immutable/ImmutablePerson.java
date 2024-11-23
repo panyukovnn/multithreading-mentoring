@@ -1,4 +1,4 @@
-package ru.panyukovnn.multithreadingmentoring.basics.immutable;
+package ru.panyukovnn.multithreadingmentoring.theory.immutable;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;

@@ -1,6 +1,9 @@
-package ru.panyukovnn.multithreadingmentoring.basics.immutable;
+package ru.panyukovnn.multithreadingmentoring.theory.basics.immutable;
 
 import org.junit.jupiter.api.Test;
+import ru.panyukovnn.multithreadingmentoring.theory.immutable.City;
+import ru.panyukovnn.multithreadingmentoring.theory.immutable.ImmutablePerson;
+import ru.panyukovnn.multithreadingmentoring.theory.immutable.Person;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package ru.panyukovnn.multithreadingmentoring.basics.immutable;
+package ru.panyukovnn.multithreadingmentoring.theory.immutable;
 
 import java.util.List;
 import java.util.Objects;
