@@ -47,7 +47,6 @@ class RateLimiterServiceTest extends AbstractTest {
 
     @Test
     void parsePageWithRateLimiterResilience4jCompletableFuture() {
-//        rateLimiterService.parsePageWithRateLimitingResilience4jCompletableFuture();
         callInParallel(150, () -> {
             try {
                 rateLimiterService.parsePageWithRateLimitingResilience4jCompletableFuture().get();

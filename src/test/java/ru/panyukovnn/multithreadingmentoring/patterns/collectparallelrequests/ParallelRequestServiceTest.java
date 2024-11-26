@@ -10,13 +10,18 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 class ParallelRequestServiceTest extends AbstractTest {
 
+    /**
+     * Для корректной работы надо поднять httpbin в docker, с помощью команды:
+     * docker run -p 7778:80 --name httpbin kennethreitz/httpbin
+     */
+
     @Test
     void sequentialExecution() {
         long startTime = System.currentTimeMillis();
 
         parallelRequestService.sequentialExecution(UUID.randomUUID());
 
-        log.info("Время выполнения: {}", System.currentTimeMillis() - startTime);
+        log.info("Время выполнения: {} мс", System.currentTimeMillis() - startTime);
     }
 
     @Test
@@ -26,6 +31,6 @@ class ParallelRequestServiceTest extends AbstractTest {
         parallelRequestService.parallelExecution(UUID.randomUUID())
             .get();
 
-        log.info("Время выполнения: {}", System.currentTimeMillis() - startTime);
+        log.info("Время выполнения: {} мс", System.currentTimeMillis() - startTime);
     }
 }

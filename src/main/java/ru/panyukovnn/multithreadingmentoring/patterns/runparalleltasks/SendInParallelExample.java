@@ -17,7 +17,7 @@ public class SendInParallelExample {
     private final ExecutorService runParallelTasksElasticExecutor;
 
     public void sendMessageToSeveralTargets(Message message) {
-        messageSenders.parallelStream().forEach(messageSender ->
+        messageSenders.forEach(messageSender ->
             CompletableFuture.runAsync(() -> messageSender.send(message), runParallelTasksElasticExecutor)
         );
     }

@@ -99,13 +99,13 @@ public class RateLimiterService {
     }
 
     public String fallbackMethod(Exception e) {
-        log.warn("Ошибка при вызове внешнего сервиса", e);
+        log.warn("Ошибка при вызове внешнего сервиса: {}", e.getMessage());
 
         return "fallback result";
     }
 
     public CompletableFuture<String> fallbackMethodCompletableFuture(Exception e) {
-        log.warn("Ошибка при вызове внешнего сервиса", e);
+        log.warn("Ошибка при вызове внешнего сервиса: {}", e.getMessage());
 
         return CompletableFuture.completedFuture("fallback result");
     }

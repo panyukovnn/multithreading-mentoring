@@ -2,6 +2,7 @@ package ru.panyukovnn.multithreadingmentoring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import ru.panyukovnn.multithreadingmentoring.patterns.awaitasyncresponse.AwaitAsyncRequestService;
 import ru.panyukovnn.multithreadingmentoring.patterns.context.caffeine.CaffeineExampleService;
 import ru.panyukovnn.multithreadingmentoring.patterns.collectparallelrequests.ParallelRequestService;
@@ -9,6 +10,7 @@ import ru.panyukovnn.multithreadingmentoring.patterns.ratelimiter.RateLimiterSer
 import ru.panyukovnn.multithreadingmentoring.patterns.runparalleltasks.SendInParallelExample;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class AbstractTest {
 
     @Autowired

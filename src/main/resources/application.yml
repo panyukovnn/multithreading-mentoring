@@ -1,6 +1,6 @@
 
 server:
-  port: 8085
+  port: 7777
   tomcat:
     threads:
       max: 200
@@ -9,10 +9,14 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
 
+#  task:
+#    scheduling.pool.size: 20 # Количество потоков @Scheduled задач
+
 app:
   kafka:
     topicIn: "topicIn"
     topicOut: "topicOut"
+  httpbin-url: "https://httpbin.org"
 
 resilience4j:
   rateLimiter:
