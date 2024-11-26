@@ -22,7 +22,7 @@ public class MentoringUtil {
         return "Долгая операция выполнена успешно";
     }
 
-    @Async("elasticExecutor")
+    @Async("correctElasticExecutor")
     public CompletableFuture<String> executeSyncLongOperationInDifferentThreadPool() {
         String result = executeLongOperation();
 

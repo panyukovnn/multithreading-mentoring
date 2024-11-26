@@ -44,8 +44,6 @@ public class SchedulerExample {
         log.info("Кеш обновлен");
     }
 
-    // -------------------------------------------
-
     @Async("analyticsSingleExecutor")
 //    @Scheduled(initialDelay = 5000, fixedDelay = 10000)
     public void prepareAnalyticsSolved() {
