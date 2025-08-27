@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
 public class KafkaMessageContext {
 
     private final Cache<String, CompletableFuture<KafkaResponse>> messageContext = Caffeine.newBuilder()
-        .expireAfterAccess(Duration.ofMinutes(1))
+        .expireAfterWrite(Duration.ofMinutes(1))
         .build();
 
     public CompletableFuture<KafkaResponse> createMessageCompletableFuture(String id) {

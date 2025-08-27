@@ -27,7 +27,7 @@ public class Threadsafety {
 
     // ------------------------------------------------
 
-    public List<Character> covertToCharList(String input) {
+    public List<Character> convertToCharList(String input) {
         List<Character> chars = new ArrayList<>();
 
         for (Character c : input.toCharArray()) {

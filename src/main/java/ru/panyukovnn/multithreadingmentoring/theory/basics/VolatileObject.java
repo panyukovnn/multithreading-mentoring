@@ -1,5 +1,7 @@
 package ru.panyukovnn.multithreadingmentoring.theory.basics;
 
+import lombok.AllArgsConstructor;
+
 import java.util.List;
 
 public class VolatileObject {
@@ -12,5 +14,20 @@ public class VolatileObject {
 
     public void updateWhitelist(List<String> newWhitelist) {
         whitelist = newWhitelist;
+    }
+
+    // ----------- Атомарное обновление значения двух координат ---------
+
+    private volatile Coordinates coordinates = new Coordinates(0, 0);
+
+    public void updateCoordinates(int x, int y) {
+        this.coordinates = new Coordinates(x, y);
+    }
+
+    @AllArgsConstructor
+    private static class Coordinates {
+
+        private Integer x = 0;
+        private Integer y = 0;
     }
 }

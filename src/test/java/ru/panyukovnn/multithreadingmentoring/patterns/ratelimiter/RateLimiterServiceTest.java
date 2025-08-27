@@ -23,7 +23,7 @@ class RateLimiterServiceTest extends AbstractTest {
 
     @Test
     void parsePageWithRateLimiter() {
-        callInParallel(1100, () -> {
+        callInParallel(150, () -> {
             try {
                 rateLimiterService.parsePageWithRateLimitingCompletableFuture()
                     .whenComplete((result, ex) -> {

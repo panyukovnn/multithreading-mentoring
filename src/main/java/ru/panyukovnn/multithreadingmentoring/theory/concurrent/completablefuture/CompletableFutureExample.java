@@ -37,13 +37,15 @@ public class CompletableFutureExample {
                     return messageRepository.save(message);
                 },
                 dbExecutor)
-            .thenComposeAsync(msg -> callSeveralCompletableFutures(msg)
-                .thenApplyAsync(responses -> {
-                    msg.setResponses(responses);
-                    messageRepository.save(msg);
+            .thenComposeAsync(msg ->
+                    callSeveralCompletableFutures(msg)
+                        .thenApplyAsync(responses -> {
+                                msg.setResponses(responses);
+                                messageRepository.save(msg);
 
-                    return msg;
-                }),
+                                return msg;
+                            },
+                            dbExecutor),
                 dbExecutor)
             .orTimeout(5, TimeUnit.SECONDS)
             .thenApplyAsync(msg -> {
@@ -56,14 +58,13 @@ public class CompletableFutureExample {
                 },
                 dbExecutor)
             .exceptionallyAsync(ex -> {
-                    log.warn("Произошла ошибка при рассылке сообщения", ex);
+                log.warn("Произошла ошибка при рассылке сообщения", ex);
 
-                    message.setState(MessageState.ERROR);
-                    messageRepository.save(message);
+                message.setState(MessageState.ERROR);
+                messageRepository.save(message);
 
-                    return message;
-                },
-                dbExecutor);
+                return message;
+            });
     }
 
     private CompletableFuture<List<String>> callSeveralCompletableFutures(Message message) {

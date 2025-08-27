@@ -6,9 +6,11 @@ public class HashtableExample {
 
     private Hashtable<String, String> hashtable = new Hashtable<>();
 
-    public void checkThenPut(String key) {
+    public void checkThenPut(String key, String value) {
         if (!hashtable.containsKey(key)) {
-            hashtable.put(key, "value");
+            // какие-то операции
+
+            hashtable.put(key, value);
         }
     }
 }

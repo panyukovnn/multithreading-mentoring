@@ -13,7 +13,7 @@ import java.time.Duration;
 public class CaffeineExampleService {
 
     private final Cache<String, String> cache = Caffeine.newBuilder()
-        .expireAfterAccess(Duration.ofMinutes(1))
+        .expireAfterWrite(Duration.ofMinutes(1))
         .maximumSize(100)
         .build();
 

@@ -16,6 +16,8 @@ class CompletableFutureExampleTest {
     void process() throws ExecutionException, InterruptedException {
         Message message = new Message(UUID.randomUUID(), MessageState.NEW, new ArrayList<>());
 
+        log.info("start");
+
         completableFutureExample.process(message)
             .whenComplete((res, ex) -> {
                 if (ex != null) {
@@ -25,5 +27,7 @@ class CompletableFutureExampleTest {
                 }
             })
             .get();
+
+        log.info("finish");
     }
 }

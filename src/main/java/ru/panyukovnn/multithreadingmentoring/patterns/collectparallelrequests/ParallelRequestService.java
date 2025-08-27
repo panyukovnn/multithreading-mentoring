@@ -2,6 +2,7 @@ package ru.panyukovnn.multithreadingmentoring.patterns.collectparallelrequests;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.panyukovnn.multithreadingmentoring.client.FeedbacksClient;
 import ru.panyukovnn.multithreadingmentoring.client.ProductInfoClient;
@@ -22,7 +23,9 @@ public class ParallelRequestService {
 
     private final ProductMapper productMapper;
     private final ProductInfoClient productInfoClient;
+    @Qualifier("feedbacksElasticExecutor")
     private final ExecutorService productInfoElasticExecutor;
+    @Qualifier("feedbacksElasticExecutor")
     private final ExecutorService feedbacksElasticExecutor;
     private final FeedbacksClient feedbacksClient;
 

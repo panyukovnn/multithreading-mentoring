@@ -5,13 +5,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
+import org.springframework.kafka.test.EmbeddedKafkaZKBroker;
 
 @Configuration
 public class KafkaConfig {
 
     @Bean
     public EmbeddedKafkaBroker broker() {
-        return new EmbeddedKafkaBroker(1)
+        return new EmbeddedKafkaZKBroker(1)
             .kafkaPorts(9092)
             .brokerListProperty("spring.kafka.bootstrap-servers");
     }

@@ -1,11 +1,9 @@
 package ru.panyukovnn.multithreadingmentoring.theory.concurrent;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ForkJoinPool;
 
 public class ConcurrentCollectionsExample {
 

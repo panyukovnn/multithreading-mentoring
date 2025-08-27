@@ -5,6 +5,7 @@ import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.panyukovnn.multithreadingmentoring.client.MarketPlaceParser;
 import ru.panyukovnn.multithreadingmentoring.exception.CustomAppException;
@@ -17,6 +18,7 @@ import java.util.concurrent.*;
 public class RateLimiterService {
 
     private final MarketPlaceParser marketPlaceParser;
+    @Qualifier("parserElasticExecutor")
     private final ExecutorService parserElasticExecutor;
 
     // ------------------ No Limit ------------------
@@ -57,14 +59,14 @@ public class RateLimiterService {
     public CompletableFuture<String> parsePageWithRateLimitingCompletableFuture() {
         try {
             return CompletableFuture.supplyAsync(marketPlaceParser::parsePage, parserElasticExecutor)
-                .orTimeout(3, TimeUnit.SECONDS)
+                .orTimeout(5, TimeUnit.SECONDS)
                 .exceptionally(e -> {
                     log.warn("Ошибка при вызове внешнего сервиса", e);
 
                     return "fallback result";
                 });
         } catch (RejectedExecutionException e) {
-            log.warn("Переполнена очередь выполонения задач на вызов внешнего сервиса");
+            log.warn("Переполнена очередь выполнения задач на вызов внешнего сервиса");
 
             return CompletableFuture.completedFuture("fallback result");
         }
@@ -94,8 +96,7 @@ public class RateLimiterService {
 
     @RateLimiter(name = "parser", fallbackMethod = "fallbackMethodCompletableFuture")
     public CompletableFuture<String> parsePageWithRateLimitingResilience4jCompletableFuture() {
-        return CompletableFuture.supplyAsync(marketPlaceParser::parsePage, parserElasticExecutor)
-            .orTimeout(3, TimeUnit.SECONDS);
+        return CompletableFuture.supplyAsync(marketPlaceParser::parsePage, parserElasticExecutor);
     }
 
     public String fallbackMethod(Exception e) {

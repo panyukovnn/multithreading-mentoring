@@ -1,45 +1,45 @@
 package ru.panyukovnn.multithreadingmentoring.theory.immutable;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-@SuppressWarnings("LombokGetterMayBeUsed")
+import static ru.panyukovnn.multithreadingmentoring.theory.immutable.DeepCopyUtil.deepCopy;
+
 public final class ImmutablePerson {
 
-    private final int age;
-    private final City city;
-    private final List<String> roles;
+    private final String firstname;
+    private final Address address;
+    private final List<Role> roles;
+    private final List<String> comments;
 
-    public ImmutablePerson(int age, City city, List<String> roles) {
-        this.age = age;
-        this.city = cloneCity(city);
-        this.roles = Collections.unmodifiableList(roles);
+    public ImmutablePerson(String firstname, Address address, List<Role> roles, List<String> comments) {
+        this.firstname = firstname;
+        this.address = deepCopy(address, new TypeReference<>() {
+        });
+        this.roles = deepCopy(roles, new TypeReference<>() {
+        });
+        this.comments = List.copyOf(comments);
     }
 
-    public int getAge() {
-        return age;
+    public String getFirstname() {
+        return firstname;
     }
 
-    @SneakyThrows
-    public City getCity() {
-        return cloneCity(this.city);
+    public Address getAddress() {
+        return deepCopy(this.address, new TypeReference<>() {
+        });
     }
 
-    public List<String> getRoles() {
-        return new ArrayList<>(roles);
+    public List<Role> getRoles() {
+        return deepCopy(this.roles, new TypeReference<>() {
+        });
     }
 
-    @SneakyThrows
-    private City cloneCity(City city) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        byte[] bytes = objectMapper.writeValueAsBytes(city);
-
-        return objectMapper.readValue(bytes, City.class);
+    public List<String> getComments() {
+        return new ArrayList<>(comments);
     }
 
     @Override
@@ -47,11 +47,11 @@ public final class ImmutablePerson {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ImmutablePerson that = (ImmutablePerson) o;
-        return age == that.age && Objects.equals(city, that.city) && Objects.equals(roles, that.roles);
+        return Objects.equals(firstname, that.firstname) && Objects.equals(address, that.address) && Objects.equals(roles, that.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(age, city, roles);
+        return Objects.hash(firstname, address, roles);
     }
 }
